@@ -6,7 +6,6 @@
         authStore.logout()
         goto("/login")
     }
-
 </script>
 <div class="container">
     <div class="row">
@@ -22,13 +21,13 @@
         </div>
         <hr class="mb-3">
     </div>
-
     <div class="row">
         <div class="col-md-2">
             <nav>
                 <div class="list-group">
                     <a href="/" class="list-group-item list-group-item-action">Home</a>
                     <a href="/movies" class="list-group-item list-group-item-action">Movies</a>
+                    <a href="/movies-cs" class="list-group-item list-group-item-action">Movies CS</a>
                     <a href="/genres" class="list-group-item list-group-item-action">Genres</a>
                     {#if $authStore.jwtToken !== ""}
                         <a href="/admin/movie" class="list-group-item list-group-item-action">Add Movie</a>
@@ -42,5 +41,4 @@
             <slot />
         </div>
     </div>
-
 </div>
