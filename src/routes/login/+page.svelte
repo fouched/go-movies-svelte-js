@@ -1,26 +1,53 @@
 <script>
-	import authStore from "$lib/stores/auth.stores";
 	import {goto} from "$app/navigation";
+	import authStore from "$lib/stores/auth.stores";
 	import Alert from "$lib/components/Alert.svelte";
 
 	let alertClassName = "d-none"
 	let alertMessage = ""
 
-	const onLogin = (/** @type {any} */ event) => {
+	// @ts-ignore
+	const onLogin = async (event) => {
+
 		const formData = new FormData(event.target)
-
 		const email = formData.get("email")
-		authStore.login(email)
-		//clear the form
-		event.target.reset()
+		const password = formData.get("password")
 
-		if ($authStore.jwtToken !== "") {
-			goto("/")
-		} else {
-			alertClassName = "alert-danger"
-			alertMessage = "Invalid credentials"
+		// build request payload
+		let payload = {
+			email: email,
+			password: password,
 		}
 
+		const requestOptions = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			credentials: 'include',
+			body: JSON.stringify(payload)
+		}
+
+		// @ts-ignore
+		await fetch(`http://localhost:9080/authenticate`, requestOptions)
+				.then((res) => res.json())
+				.then((data) => {
+					if (data.error) {
+						console.log("login error", data.error)
+						alertClassName = "alert-danger"
+						alertMessage = "Invalid credentials"
+					} else {
+						console.log("login success")
+						authStore.jwtToken(data.access_token)
+						goto("/")
+					}
+				})
+				.catch(err => {
+					console.log(err.message)
+				});
+
+		//clear the form
+		event.target.reset()
 	}
 
 </script>
@@ -31,7 +58,7 @@
 		<label for="email" class="form-label">Email</label>
 		<input id="email" name="email" type="text" class="form-control" autocomplete="off">
 		<label for="password" class="form-label">Password</label>
-		<input id="password" name="password" type="password" class="form-control mb-3">
+		<input id="password" name="password" type="password" class="form-control mb-3" autocomplete="off">
 		<input type="submit" class="btn btn-primary" value="Log in" />
 	</form>
 </div>

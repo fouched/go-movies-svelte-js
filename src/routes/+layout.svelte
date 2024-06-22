@@ -2,10 +2,50 @@
     import { goto } from "$app/navigation";
     import authStore from "$lib/stores/auth.stores";
 
-    const logOut = () => {
-        authStore.logout()
+
+
+    const logOut = async () => {
+
+        const requestOptions = {
+            method: "GET",
+            credentials: "include",
+        }
+
+        // @ts-ignore
+        await fetch("http://localhost:9080/logout", requestOptions)
+            .catch((err) => {
+                console.log("error logging out", err);
+            })
+            .finally(() => {
+                authStore.jwtToken("");
+            });
+
         goto("/login")
     }
+
+    if ($authStore.jwtToken === "") {
+        console.log("checking for refresh token")
+        const requestOptions = {
+            method: "GET",
+            credentials: "include"
+        }
+
+        // @ts-ignore
+        fetch(`http://localhost:9080/refresh`, requestOptions)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.access_token) {
+                    console.log("refresh token found");
+                    authStore.jwtToken(data.access_token)
+                }
+            })
+            .catch((err) => {
+                console.log("user is not logged in", err);
+            });
+    }
+
+
+
 </script>
 <div class="container">
     <div class="row">
