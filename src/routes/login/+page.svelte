@@ -1,6 +1,7 @@
 <script>
 	import {goto} from "$app/navigation";
 	import authStore from "$lib/stores/auth.stores";
+	import {refreshToken} from "$lib/auth/refreshToken.js";
 	import Alert from "$lib/components/Alert.svelte";
 
 	let alertClassName = "d-none"
@@ -39,6 +40,7 @@
 					} else {
 						console.log("login success")
 						authStore.jwtToken(data.access_token)
+						refreshToken(true)
 						goto("/")
 					}
 				})
