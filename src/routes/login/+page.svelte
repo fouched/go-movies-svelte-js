@@ -50,7 +50,6 @@
 		//clear the form
 		event.target.reset()
 	}
-
 </script>
 <Alert className={alertClassName} message={alertMessage}/>
 <div class="col-md-6 offset-md-3">

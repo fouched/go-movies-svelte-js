@@ -16,15 +16,19 @@ const refreshToken = (enable) => {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.access_token) {
-                        authStore.onAuthChanged(true)
                         console.log("refreshing Token")
+                        authStore.onAuthChanged(true)
+                        // we also need to refresh the cookie
+                        fetch('/token', {
+                            method: 'POST',
+                            body: JSON.stringify({ token: data.access_token })
+                        });
                     }
                 })
                 .catch(() => {
                     console.log("user is not logged in");
                     clearInterval(intervalId);
                 });
-
         }, 600000) // 600000 refresh token every 10 minutes
     } else {
         clearInterval(intervalId);
