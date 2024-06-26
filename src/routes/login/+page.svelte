@@ -1,8 +1,8 @@
 <script>
-	import {goto} from "$app/navigation";
-	import authStore from "$lib/stores/auth.stores";
-	import {refreshToken} from "$lib/auth/refreshToken.js";
+	import { page } from '$app/stores'
 	import Alert from "$lib/components/Alert.svelte";
+	import authStore from '$lib/stores/auth.store.js';
+	import {afterLogin} from "$lib/helpers/route.helper.js";
 
 	let alertClassName = "d-none"
 	let alertMessage = ""
@@ -34,14 +34,13 @@
 				.then((res) => res.json())
 				.then((data) => {
 					if (data.error) {
-						console.log("login error", data.error)
-						alertClassName = "alert-danger"
-						alertMessage = "Invalid credentials"
+						console.log("login error", data.error);
+						alertClassName = "alert-danger";
+						alertMessage = "Invalid credentials";
 					} else {
-						console.log("login success")
-						authStore.jwtToken(data.access_token)
-						refreshToken(true)
-						goto("/")
+						console.log("login success");
+						authStore.jwtToken(data.access_token);
+						afterLogin($page.url, data.access_token);
 					}
 				})
 				.catch(err => {

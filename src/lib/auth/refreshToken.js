@@ -1,4 +1,4 @@
-import authStore from "$lib/stores/auth.stores.js";
+import authStore from "$lib/stores/auth.store.js";
 
 let intervalId = 0;
 
@@ -17,6 +17,7 @@ const refreshToken = (enable) => {
                 .then((data) => {
                     if (data.access_token) {
                         authStore.jwtToken(data.access_token)
+                        console.log("refreshing Token")
                     }
                 })
                 .catch(() => {
