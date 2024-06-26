@@ -25,7 +25,7 @@ const refreshToken = (enable) => {
                     clearInterval(intervalId);
                 });
 
-        }, 600000) // refresh token every 10 minutes
+        }, 600000) // 600000 refresh token every 10 minutes
     } else {
         clearInterval(intervalId);
     }

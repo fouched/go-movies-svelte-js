@@ -14,7 +14,6 @@
     let isLoggedIn = data.jwt !== ''
     $: isLoggedIn = $authStore.jwtToken !== ''
 
-    console.log("isLoggedIn", isLoggedIn)
     if (browser && !isLoggedIn) {
         goto("/login")
     }
