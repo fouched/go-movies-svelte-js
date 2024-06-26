@@ -9,18 +9,18 @@
 
     export let data
     if (data.jwt !== '') {
-        authStore.jwtToken(data.jwt)
+        authStore.onAuthChanged(true);
     }
     let isLoggedIn = data.jwt !== ''
-    $: isLoggedIn = $authStore.jwtToken !== ''
+    $: isLoggedIn = $authStore.isLoggedIn;
 
     if (browser && !isLoggedIn) {
-        goto("/login")
+        goto("/login");
     }
 
     // cater for browser refresh
     onMount(() => {
-        refreshToken(true)
+        refreshToken(true);
     });
 
     const logOut = async () => {
@@ -36,7 +36,7 @@
                 console.log("error logging out", err);
             })
             .finally(() => {
-                authStore.jwtToken("");
+                authStore.onAuthChanged(false)
                 afterLogin($page.url, "")
             });
     }

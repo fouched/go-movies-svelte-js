@@ -1,10 +1,10 @@
 import { writable } from "svelte/store";
 
-const authStore = writable({jwtToken: ""});
+const authStore = writable({isLoggedIn: false});
 
 export default {
     subscribe: authStore.subscribe,
-    jwtToken: (token) => {
-        authStore.set({jwtToken: token});
+    onAuthChanged: (isLoggedIn) => {
+        authStore.set({isLoggedIn: isLoggedIn});
     }
 }

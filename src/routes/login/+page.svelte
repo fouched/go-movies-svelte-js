@@ -39,7 +39,7 @@
 						alertMessage = "Invalid credentials";
 					} else {
 						console.log("login success");
-						authStore.jwtToken(data.access_token);
+						authStore.onAuthChanged(true);
 						afterLogin($page.url, data.access_token);
 					}
 				})

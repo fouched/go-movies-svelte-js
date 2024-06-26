@@ -16,7 +16,7 @@ const refreshToken = (enable) => {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.access_token) {
-                        authStore.jwtToken(data.access_token)
+                        authStore.onAuthChanged(true)
                         console.log("refreshing Token")
                     }
                 })
