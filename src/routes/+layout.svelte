@@ -66,8 +66,8 @@
                     <a href="/genres" class="list-group-item list-group-item-action">Genres</a>
                     {#if isLoggedIn }
                         <a href="/admin/movie" class="list-group-item list-group-item-action">Add Movie</a>
-                        <a href="/catalogue" class="list-group-item list-group-item-action">Manage Catalogue</a>
-                        <a href="/graphql" class="list-group-item list-group-item-action">GraphQL</a>
+                        <a href="/admin/catalogue" class="list-group-item list-group-item-action">Manage Catalogue</a>
+                        <a href="/admin/graphql" class="list-group-item list-group-item-action">GraphQL</a>
                     {/if}
                 </div>
             </nav>
