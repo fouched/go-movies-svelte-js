@@ -1,7 +1,4 @@
 export async function load({ cookies }) {
-
-	let moviesList = []
-
 	const headers = new Headers();
 	headers.append('Content-Type', 'application/json');
 	headers.append('Authorization', 'Bearer ' + cookies.get('jwt'));
@@ -11,6 +8,7 @@ export async function load({ cookies }) {
 		headers: headers,
 	}
 
+	let moviesList = []
 	await fetch(`http://localhost:9080/admin/movies`, requestOptions)
 		.then((res) => res.json())
 		.then(data => moviesList = data)
