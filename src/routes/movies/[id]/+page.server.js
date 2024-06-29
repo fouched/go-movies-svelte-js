@@ -1,15 +1,22 @@
-export function load({ params }) {
+export async function load({ params }) {
+	const headers = new Headers();
+	headers.append('Content-Type', 'application/json');
+	const requestOptions = {
+		method: "GET",
+		headers: headers,
+	}
 
-	console.log("Loading movie", params.id);
+	let movie = {};
+	await fetch(`http://localhost:9080/movies/${params.id}`, requestOptions)
+		.then((res) => res.json())
+		.then(data => movie = data)
+		.catch(err => console.log(err))
 
-	const movie = {
-		id: 1,
-		title: 'Highlander',
-		release_date: '1986-03-07',
-		runtime: 116,
-		mpaa_rating: 'R',
-		description: 'Some long description'
-	};
+	if (movie.genres) {
+		movie.genres = Object.values(movie.genres)
+	} else {
+		movie.genres = []
+	}
 
 	return { movie };
 }
