@@ -1,17 +1,14 @@
 <script>
     export let name = ''
     export let title = ''
-    export let className = ''
     export let value = ''
     export let checked = false
-    export let errorDiv = ''
-    export let errorMsg = ''
 </script>
-<div class="mb-3">
+<div class="form-check">
     <input
             id={name}
             name={name}
-            class={className}
+            class="form-check-input"
             type="checkbox"
             value={value}
             bind:checked={checked}
@@ -19,5 +16,4 @@
     <label for={name} class="form-check-label">
         {title}
     </label>
-    <div class={errorDiv}>{errorMsg}</div>
 </div>

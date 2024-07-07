@@ -4,7 +4,7 @@
     export let className = ''
     export let value = ''
     export let rows = 2
-    export let errorDiv = ''
+    export let errors = []
     export let errorMsg = ''
 </script>
 <div class="mb-3">
@@ -15,8 +15,11 @@
             id={name}
             name={name}
             class={className}
+            class:is-invalid={errors.indexOf(name) !== -1}
             rows={rows}
             bind:value
     />
-    <div class={errorDiv}>{errorMsg}</div>
+    {#if errors.indexOf(name) !== -1}
+        <div class="text-danger">{errorMsg}</div>
+    {/if}
 </div>

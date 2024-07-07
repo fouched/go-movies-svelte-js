@@ -4,7 +4,7 @@
     export let className = ''
     export let placeholder = ''
     export let value = ''
-    export let errorDiv = ''
+    export let errors = []
     export let errorMsg = ''
 </script>
 <div class="mb-3">
@@ -16,8 +16,11 @@
             name={name}
             type="date"
             class={className}
+            class:is-invalid={errors.indexOf(name) !== -1}
             placeholder={placeholder}
             bind:value
     />
-    <div class={errorDiv}>{errorMsg}</div>
+    {#if errors.indexOf(name) !== -1}
+        <div class="text-danger">{errorMsg}</div>
+    {/if}
 </div>
